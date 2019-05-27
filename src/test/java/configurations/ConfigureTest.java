@@ -65,7 +65,7 @@ public class ConfigureTest {
             DesiredCapabilities capability = new DesiredCapabilities();
             capability.setBrowserName(Browser);
             capability.setPlatform(Platform.WINDOWS);
-            driver = new RemoteWebDriver(new URL("http://192.168.213.145:"  + Port + "/wd/hub"), capability);
+            driver = new RemoteWebDriver(new URL("http://192.168.213.21:"  + Port + "/wd/hub"), capability);
         }
 //       Set the waiting time for elements visible
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
