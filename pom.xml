@@ -106,7 +106,7 @@
                 <inherited>true</inherited>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/java/configurations/debug.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/java/configurations/demo.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
