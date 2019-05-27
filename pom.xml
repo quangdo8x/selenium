@@ -106,7 +106,7 @@
                 <inherited>true</inherited>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                        <suiteXmlFile>debug.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
