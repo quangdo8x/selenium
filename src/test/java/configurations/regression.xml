@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Regression" parallel="tests">
+    <listeners>
+        <listener class-name="supports.ReportConfigurations"/>
+    </listeners>
+    <parameter name="remote" value="true"/>
+    <test name="Chrome">
+        <parameter name="port" value="4445"/>
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="testcases.home.HomeCases"/>
+            <!--<class name="testcases.login.LoginCases"/>-->
+        </classes>
+    </test>
+    <test name="Firefox">
+        <parameter name="port" value="4446"/>
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="testcases.home.HomeCases"/>
+            <!--<class name="testcases.login.LoginCases"/>-->
+        </classes>
+    </test>
+    <!--<test name="IE">
+        <parameter name="port" value="4447"/>
+        <parameter name="browser" value="internet explorer"/>
+        <classes>
+            <class name="testcases.home.HomeCases"/>
+            <class name="testcases.login.LoginCases"/>
+        </classes>
+    </test>
+    <test name="Edge">
+        <parameter name="port" value="4448"/>
+        <parameter name="browser" value="MicrosoftEdge"/>
+        <classes>
+            <class name="testcases.home.HomeCases"/>
+            &lt;!&ndash;<class name="testcases.login.LoginCases"/>&ndash;&gt;
+        </classes>
+    </test>-->
+</suite>
