@@ -105,6 +105,7 @@
                 <version>3.0.0-M3</version>
                 <inherited>true</inherited>
                 <configuration>
+                    <!--This configuration is for Jenkins build with using demo.xml file-->
                     <suiteXmlFiles>
                         <suiteXmlFile>src/test/java/configurations/demo.xml</suiteXmlFile>
                     </suiteXmlFiles>

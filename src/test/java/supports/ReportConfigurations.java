@@ -31,10 +31,11 @@ public class ReportConfigurations implements ITestListener {
     private int numberFailedTests = 0;
     private int numberSkipTest = 0;
     private long durations = 0;
-    private String outputsPath = System.getProperty("user.home") + "/automation_outputs/";
+    private String outputsPath = "outputs/";
+    private String logPath = outputsPath + "log/";
+    private String filePath = outputsPath + "files/";
     private String reportsPath = outputsPath + "reports/";
     private String screenshotsPath = outputsPath + "screenshots/";
-    private String logPath = outputsPath + "log/";
 
     private Logger logger = Logger.getLogger("rootLogger");
     private HashMap<String, HashMap<String, String>> suiteResult = new HashMap<>();
@@ -128,6 +129,7 @@ public class ReportConfigurations implements ITestListener {
 //        Create outputs folders (log, reports, screenshots) before executing tests
         createFolder(outputsPath);
         createFolder(logPath);
+        createFolder(filePath);
         createFolder(reportsPath);
         createFolder(screenshotsPath);
         logger.info("-----The execution was STARTED!-----");

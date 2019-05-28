@@ -47,7 +47,7 @@ public class LoginCases extends ConfigureTest {
         logger.info("The loading was completed!");
 
 //        Expected result: Home page is opened
-        function.verifyPageTitle("Homepage | datavat");
+        function.verifyPageTitle("Homepage | datavati");
         logger.info("The title of page was verified!");
 
 //        Expected result: Terms & Conditions popup is opened
@@ -95,7 +95,7 @@ public class LoginCases extends ConfigureTest {
         logger.info("The title of page was verified!");
 
 //        Expected result: Error "Invalid username or password" appears
-        function.verifyElementText(loginPage.msgError, "Error: Invalid username or password");
+        function.verifyElementText(loginPage.msgError, "Error: Invalid username or passwordi");
         logger.info("The error message was verified!");
 
 //        Count failed assertions if any

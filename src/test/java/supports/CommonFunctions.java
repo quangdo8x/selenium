@@ -104,7 +104,7 @@ public class CommonFunctions {
 
     /*===============================================================================
      'Method name:  countFailedAssertions()
-     'Description:  Count total failed assertions
+     'Description:  Count total failed assertions in test case
      'Arguments:    N/A
      'Created by:   Quang Do
      'Created date: May-08-2019
