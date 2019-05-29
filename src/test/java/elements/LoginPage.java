@@ -11,25 +11,23 @@ import supports.CommonFunctions;
 public class LoginPage {
 
     private WebDriver driver;
-    private HomePage homePage;
     private WebDriverWait wait;
 
     public LoginPage(WebDriver driver){
         this.driver = driver;
 
-        homePage = new HomePage(driver);
         wait = new WebDriverWait(driver, 20);
         PageFactory.initElements(driver, this);
     }
 
     @FindBy(id = "username")
-    private WebElement txtUsername;
+    public WebElement txtUsername;
 
     @FindBy(id = "password")
-    private WebElement txtPassword;
+    public WebElement txtPassword;
 
     @FindBy(id = "login")
-    private WebElement btnLogin;
+    public WebElement btnLogin;
 
     @FindBy(linkText = "Forgot your password?")
     private WebElement lnkForgotPassword;
@@ -39,42 +37,6 @@ public class LoginPage {
 
     @FindBy(xpath = "//div[@class='alert alert-danger validation-div']")
     public WebElement msgError;
-
-    /*===============================================================================
-     'Method name:  enterUserName(String UserName)
-     'Description:  Enter text into Username field
-     'Arguments:    String UserName: username
-     'Created by:   Quang Do
-     'Created date: May-08-2019
-     ===============================================================================*/
-    public void enterUserName(String UserName){
-//        Enter text into username field
-        txtUsername.sendKeys(UserName);
-    }
-
-    /*===============================================================================
-     'Method name:  enterPassWord(String PassWord)
-     'Description:  Enter text into password field
-     'Arguments:    String PassWord: password
-     'Created by:   Quang Do
-     'Created date: May-08-2019
-     ===============================================================================*/
-    public void enterPassWord(String PassWord){
-//        Enter text into password field
-        txtPassword.sendKeys(PassWord);
-    }
-
-    /*===============================================================================
-     'Method name:  clickLogIn()
-     'Description:  Click on Login button
-     'Arguments:    N/A
-     'Created by:   Quang Do
-     'Created date: May-08-2019
-     ===============================================================================*/
-    public void clickLogIn(){
-//        Click on Login button
-        btnLogin.click();
-    }
 
     /*===============================================================================
      'Method name:  logIn(String UserName, String PassWord)
@@ -87,13 +49,13 @@ public class LoginPage {
     public void logIn(String UserName, String PassWord) throws InterruptedException {
 //        Enter username
         wait.until(ExpectedConditions.visibilityOf(txtUsername));
-        enterUserName(UserName);
+        txtUsername.sendKeys(UserName);
 
 //        Enter password
-        enterPassWord(PassWord);
+        txtPassword.sendKeys(PassWord);
 
 //        Click Login
-        clickLogIn();
+        btnLogin.click();
 
 //        Handle to click on Security alert on Firefox
         Capabilities cap = ((RemoteWebDriver) driver).getCapabilities();
@@ -106,17 +68,5 @@ public class LoginPage {
 //        Wait for loading completed
         CommonFunctions function = new CommonFunctions(driver);
         function.waitForLoadingDisappears(60);
-    }
-
-    /*===============================================================================
-     'Method name:  logOut()
-     'Description:  Logout web page
-     'Arguments:    N/A
-     'Created by:   Quang Do
-     'Created date: May-08-2019
-     ===============================================================================*/
-    public void logOut() throws InterruptedException {
-//        Select menu item Logout
-        homePage.clickOnSubMenu(homePage.lblUsername, homePage.lnkSignOut, false);
     }
 }

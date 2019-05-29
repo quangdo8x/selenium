@@ -25,7 +25,7 @@ public class HomePage {
     public WebElement hedTermsAndConditions;
 
     @FindBy(id = "acceptTermCondition")
-    private WebElement btnAcceptAndContinue;
+    public WebElement btnAcceptAndContinue;
 
     @FindBy(id = "declineTermCondition")
     private WebElement btnDecline;
@@ -144,28 +144,6 @@ public class HomePage {
     @FindBy(xpath = "//ul[@class='menu menu--footer-bottom nav']/li/a[text()='Disclaimer']")
     private WebElement lnkDisclaimer;
 
-    /*=========================================================================================================================
-    'Method name:  acceptTermsAndConditions()
-    'Description:  Accept terms and conditions by clicking Accept & Continue button on DataVat Website Terms & Conditions popup
-    'Arguments:    N/A
-    'Created by:   Quang Do
-    'Created date: May-08-2019
-    ==========================================================================================================================*/
-    public void acceptTermsAndConditions(){
-        btnAcceptAndContinue.click();
-    }
-
-    /*======================================================================================
-     'Method name:  openLoginPage()
-     'Description:  Go to Login page by clicking Login button in Home page
-     'Arguments:    N/A
-     'Created by:   Quang Do
-     'Created date: May-08-2019
-     ======================================================================================*/
-    public void openLoginPage(){
-        btnLogin.click();
-    }
-
     /*======================================================================================
     'Method name:  clickOnSubMenu(WebElement RootMenu, WebElement SubMenu, Boolean HasLoading)
     'Description:  Hover over root menu then click on sub menu to navigate to the web page of sub menu
@@ -214,17 +192,5 @@ public class HomePage {
 
 //        Wait for loading completed
         function.waitForLoadingDisappears(60);
-    }
-
-    /*======================================================================================
-     'Method name:  openFertilityFocusReportPage()
-     'Description:  Open Fertility Focus Report Page by hovering over Report & Tools menu, then clicking on Fertility Focus Report item
-     'Arguments:    N/A
-     'Created by:   Quang Do
-     'Created date: May-10-2019
-     ======================================================================================*/
-    public void openFertilityFocusReportPage() {
-//        Handle to navigate to Fertility FocusReport Page instead of selecting menu item (Report & Tools/Fertility Focus Report)
-        driver.navigate().to("http://qc-datavat.datagene.com.au/reports/fertility-focus-report");
     }
 }

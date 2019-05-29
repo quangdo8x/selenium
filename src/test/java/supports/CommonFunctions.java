@@ -3,19 +3,15 @@ package supports;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.asserts.SoftAssert;
 
 import java.io.File;
 
 public class CommonFunctions {
 
     private WebDriver driver;
-    private SoftAssert softAssert;
 
     public CommonFunctions(WebDriver driver){
         this.driver = driver;
-
-        softAssert = new SoftAssert();
     }
 
     /*===============================================================================
@@ -100,53 +96,5 @@ public class CommonFunctions {
             isExist = file.exists();
             time++;
         }
-    }
-
-    /*===============================================================================
-     'Method name:  countFailedAssertions()
-     'Description:  Count total failed assertions in test case
-     'Arguments:    N/A
-     'Created by:   Quang Do
-     'Created date: May-08-2019
-     ===============================================================================*/
-    public void countFailedAssertions(){
-        softAssert.assertAll();
-    }
-
-    /*===============================================================================
-     'Method name:  verifyPageTitle(String PageTitle)
-     'Description:  Check the title of page
-     'Arguments:    String PageTitle: the title of page
-     'Created by:   Quang Do
-     'Created date: May-08-2019
-     ===============================================================================*/
-    public void verifyPageTitle(String PageTitle){
-//        Get the title of page then check with expectation
-        softAssert.assertEquals(PageTitle, driver.getTitle());
-    }
-
-    /*===============================================================================
-     'Method name:  verifyElementExists(WebElement ElementName)
-     'Description:  Check the element of page appears or not
-     'Arguments:    WebElement ElementName: the name of element (txt_Username, btn_Login...)
-     'Created by:   Quang Do
-     'Created date: May-08-2019
-     ===============================================================================*/
-    public void verifyElementExists(WebElement ElementName){
-//        Check the element appears or not
-        softAssert.assertTrue(ElementName.isDisplayed());
-    }
-
-    /*===============================================================================
-     'Method name:  verifyElementText(WebElement ElementName, String Text)
-     'Description:  Check the text on element
-     'Arguments:    WebElement ElementName: the name of element (txt_Username, btn_Login...)
-     '              String Text: the expected text
-     'Created by:   Quang Do
-     'Created date: May-08-2019
-     ===============================================================================*/
-    public void verifyElementText(WebElement ElementName, String Text){
-//        Get text on element then check with expectation
-        softAssert.assertEquals(ElementName.getText().trim(), Text);
     }
 }

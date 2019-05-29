@@ -92,7 +92,6 @@ public class ConfigureTest {
 //            Click on "Go to the webpage (Not recommended)" link
             executor.executeScript("javascript:document.getElementById('invalidcert_continue').click();");
         }*/
-        logger.info("The website was opened!");
     }
 
     @AfterTest

@@ -132,11 +132,9 @@ public class ReportConfigurations implements ITestListener {
         createFolder(filePath);
         createFolder(reportsPath);
         createFolder(screenshotsPath);
-        logger.info("-----The execution was STARTED!-----");
     }
 
     public void onFinish(ITestContext context) {
-        logger.info("-----The execution was FINISHED!-----");
 
         String time = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
         String fileName = reportsPath + context.getCurrentXmlTest().getSuite().getName() + "_" + context.getName()+ "_" + time + ".xlsx";

@@ -7,6 +7,7 @@ import supports.CommonFunctions;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class FertilityFocusReportPage {
 
@@ -15,16 +16,16 @@ public class FertilityFocusReportPage {
 
     public FertilityFocusReportPage(WebDriver driver){
         this.driver = driver;
-        PageFactory.initElements(driver, this);
 
         function = new CommonFunctions(driver);
+        PageFactory.initElements(driver, this);
     }
 
     @FindBy(xpath = "//h3[@class='block-title']")
     private WebElement hedFertilityFocusReport;
 
     @FindBy(xpath = "//div[text()='Select herd']")
-    private WebElement drdSelectHerd;
+    public WebElement drdSelectHerd;
 
     @FindBy(xpath = "//button[@id='btn-preview-ffr']")
     private WebElement btnPreview;
@@ -42,7 +43,7 @@ public class FertilityFocusReportPage {
     'Created by:   Quang Do
     'Created date: May-10-2019
     ===============================================================================*/
-    public void printReport(String HerdName) throws Exception {
+    public void printReport(String HerdName) throws InterruptedException, AWTException, IOException {
 
         String projectDirectory = System.getProperty("user.dir");
         String userPath = System.getProperty("user.home");
@@ -51,7 +52,7 @@ public class FertilityFocusReportPage {
 //        Delete old report before printing new file if exist before that
         function.deleteFile(filePath);
 
-//        Handle selecting herd by clicking dropdown then select name
+//        Handle to select the herd by clicking dropdown then select name
         drdSelectHerd.click();
         driver.findElement(By.xpath("//div[text()='" + HerdName + "']")).click();
 
