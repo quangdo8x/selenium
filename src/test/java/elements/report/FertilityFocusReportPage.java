@@ -46,8 +46,7 @@ public class FertilityFocusReportPage {
     public void printReport(String HerdName) throws InterruptedException, AWTException, IOException {
 
         String projectDirectory = System.getProperty("user.dir");
-        String userPath = System.getProperty("user.home");
-        String filePath = userPath + "\\automation_outputs\\FertilityFocusReport.pdf";
+        String filePath = projectDirectory + "\\outputs\\files\\FertilityFocusReport.pdf";
 
 //        Delete old report before printing new file if exist before that
         function.deleteFile(filePath);

@@ -7,8 +7,9 @@ import elements.report.FertilityFocusReportPage;
 import org.openqa.selenium.By;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import supports.CommonFunctions;
-import testcases.login.LoginCases;
+
+import java.awt.*;
+import java.io.IOException;
 
 public class HomeCases extends ConfigureTest {
 
@@ -31,7 +32,7 @@ public class HomeCases extends ConfigureTest {
      'Source:
      ===============================================================================*/
     @Test
-    public void TC01_PrintFertilityFocusReport() throws InterruptedException {
+    public void TC01_PrintFertilityFocusReport() throws InterruptedException, IOException, AWTException {
         String userName = "dgadmin1";
         String passWord = "12345678x@X";
         String heardName = "";
@@ -53,8 +54,11 @@ public class HomeCases extends ConfigureTest {
         logger.info("Fertility Focus Report was opened!");
 
 //        Step 5: Select the herd
-        fertilityFocusReportPage.drdSelectHerd.click();
-        driver.findElement(By.xpath("//div[text()='" + heardName + "']")).click();
-
+//        Step 6: Click Preview button
+//        Step 7: Click Print button
+//        Step 8: Click Print button on Print Preview
+//        Step 9: Enter file path of report
+//        Step 10: Click Save button
+        fertilityFocusReportPage.printReport("");
     }
 }
