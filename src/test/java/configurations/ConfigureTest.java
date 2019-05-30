@@ -12,6 +12,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
+import org.testng.asserts.SoftAssert;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class ConfigureTest {
 
     public static WebDriver driver;
+    public static SoftAssert softAssert = new SoftAssert();
     protected static Logger logger = Logger.getLogger("rootLogger");
 
     /*==================================================================================================================

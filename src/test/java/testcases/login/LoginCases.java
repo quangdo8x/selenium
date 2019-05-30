@@ -11,7 +11,6 @@ public class LoginCases extends ConfigureTest {
 
     private LoginPage loginPage;
     private HomePage homePage;
-    private SoftAssert softAssert;
     private String expectedTitle = "DataGene Identity Server";
     private String actualTitle = driver.getTitle().trim();
 
@@ -19,7 +18,6 @@ public class LoginCases extends ConfigureTest {
     public void setUp(){
         loginPage = new LoginPage(driver);
         homePage = new HomePage(driver);
-        softAssert = new SoftAssert();
     }
 
     /*===============================================================================
