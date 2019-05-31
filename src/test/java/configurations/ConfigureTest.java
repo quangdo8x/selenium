@@ -22,10 +22,10 @@ public class ConfigureTest {
 
     public static WebDriver driver;
     public static SoftAssert softAssert = new SoftAssert();
-    protected static Logger logger = Logger.getLogger("rootLogger");
+    public static Logger logger;
 
     /*==================================================================================================================
-     'Method name:  selectBrowserType(String Remote, String Address, String Port, String Browser)
+     'Method name:  setUpTest(String Remote, String Address, String Port, String Browser)
      'Description:  Open Website with selecting remote execution or not and what browser type
      'Arguments:    String Remote: remote or not. If true, execute tests remotely on hub. If false, execute tests on local
      '              String Address: the IP address of hub
@@ -36,36 +36,64 @@ public class ConfigureTest {
      =================================================================================================================*/
     @BeforeTest
     @Parameters({"remote", "port", "browser"})
-    public void selectBrowserType(String Remote, String Port, String Browser) throws MalformedURLException {
+    public void setUpTest(String Remote, String Port, String Browser) throws MalformedURLException {
 
         if (Remote.equalsIgnoreCase("false")) {
+
 //           Select browser type
             switch (Browser){
                 case "chrome":
-//                Open Chrome browser
+//                    Open Chrome browser
                     System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
                     driver = new ChromeDriver();
+                    logger  = Logger.getLogger("chromeLogger");
                     break;
                 case "firefox":
-//                Open Firefox browser
+//                    Open Firefox browser
                     System.setProperty("webdriver.gecko.driver", "drivers/geckodriver.exe");
                     driver = new FirefoxDriver();
+                    logger  = Logger.getLogger("firefoxLogger");
                     break;
                 case "internet explorer":
-//                Open IE browser
+//                    Open IE browser
                     System.setProperty("webdriver.ie.driver", "drivers/IEDriverServer.exe");
                     driver = new InternetExplorerDriver();
+                    logger  = Logger.getLogger("ieLogger");
                     break;
                 case "MicrosoftEdge":
-//                Open Edge browser
+//                    Open Edge browser
                     System.setProperty("webdriver.edge.driver", "drivers/msedgedriver.exe");
                     driver = new EdgeDriver();
+                    logger  = Logger.getLogger("edgeLogger");
                     break;
             }
-        } else {
-//            Setup for grid execution on Hub
+        } else if (Remote.equalsIgnoreCase("true")){
+
             DesiredCapabilities capability = new DesiredCapabilities();
-            capability.setBrowserName(Browser);
+
+//           Select browser type
+            switch (Browser){
+                case "chrome":
+//                   Open Chrome browser
+                    capability.setBrowserName("chrome");
+                    logger  = Logger.getLogger("chromeLogger");
+                    break;
+                case "firefox":
+//                    Open Firefox browser
+                    capability.setBrowserName("firefox");
+                    logger  = Logger.getLogger("firefoxLogger");
+                    break;
+                case "internet explorer":
+//                    Open IE browser
+                    capability.setBrowserName("internet explorer");
+                    logger  = Logger.getLogger("ieLogger");
+                    break;
+                case "MicrosoftEdge":
+//                    Open Edge browser
+                    capability.setBrowserName("MicrosoftEdge");
+                    logger  = Logger.getLogger("edgeLogger");
+                    break;
+            }
             capability.setPlatform(Platform.WINDOWS);
             driver = new RemoteWebDriver(new URL("http://192.168.213.21:"  + Port + "/wd/hub"), capability);
         }
@@ -76,28 +104,12 @@ public class ConfigureTest {
         driver.manage().window().maximize();
 
 //        Enter web URL to navigate to page
-        driver.navigate().to("http://qc-datavat.datagene.com.au");
-
-/*//        Handle to go through Certificate Error on IE and Edge
-        JavascriptExecutor executor = (JavascriptExecutor)driver;
-        if (Browser.equals("internet explorer")) {
-//            Click on "More information" link
-            executor.executeScript("document.getElementById('moreInfoContainer').click();");
-
-//            Click on "Go to the webpage (not recommended)" link
-            executor.executeScript("document.getElementById('overridelink').click();");
-
-        }else if (Browser.equals("MicrosoftEdge")){
-//            Click on "Details" link
-            executor.executeScript("document.getElementById('moreInformationDropdownSpan').click();");
-
-//            Click on "Go to the webpage (Not recommended)" link
-            executor.executeScript("javascript:document.getElementById('invalidcert_continue').click();");
-        }*/
+//        driver.navigate().to("http://qc-datavat.datagene.com.au");
+        driver.navigate().to("https://github.com/");
     }
 
     @AfterTest
-    public void cleanUp() {
+    public void cleanUp(){
         driver.quit();
     }
 }

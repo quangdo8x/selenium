@@ -37,15 +37,15 @@ public class ReportConfigurations implements ITestListener {
     private String reportsPath = outputsPath + "reports/";
     private String screenshotsPath = outputsPath + "screenshots/";
 
-    private Logger logger = Logger.getLogger("rootLogger");
+//    private Logger logger;
     private HashMap<String, HashMap<String, String>> suiteResult = new HashMap<>();
 
     public void onTestStart(ITestResult result) {
-        logger.info(result.getTestClass().getName() + "_" + result.getMethod().getMethodName() + " was STARTED!");
+//        logger.info(result.getTestClass().getName() + "_" + result.getMethod().getMethodName() + " was STARTED!");
     }
 
     public void onTestSuccess(ITestResult result) {
-        logger.info(result.getMethod().getMethodName() + " was PASSED!");
+//        logger.info(result.getMethod().getMethodName() + " was PASSED!");
 
         long tcDuration = result.getEndMillis() - result.getStartMillis();
         numberPassedTests++;
@@ -65,7 +65,7 @@ public class ReportConfigurations implements ITestListener {
     }
 
     public void onTestFailure(ITestResult result) {
-        logger.info(result.getMethod().getMethodName() + " was FAILED!");
+//        logger.info(result.getMethod().getMethodName() + " was FAILED!");
 
         String time = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
         long tcDuration = result.getEndMillis() - result.getStartMillis();
@@ -101,7 +101,7 @@ public class ReportConfigurations implements ITestListener {
     }
 
     public void onTestSkipped(ITestResult result) {
-        logger.info(result.getMethod().getMethodName() + " was SKIPPED!");
+//        logger.info(result.getMethod().getMethodName() + " was SKIPPED!");
 
         long tcDuration = result.getEndMillis() - result.getStartMillis();
         numberSkipTest++;
@@ -132,6 +132,7 @@ public class ReportConfigurations implements ITestListener {
         createFolder(filePath);
         createFolder(reportsPath);
         createFolder(screenshotsPath);
+//         logger = ConfigureTest.logger;
     }
 
     public void onFinish(ITestContext context) {
