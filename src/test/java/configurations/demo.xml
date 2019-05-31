@@ -10,6 +10,7 @@
         <parameter name="browser" value="chrome"/>
         <classes>
             <class name="testcases.login.LoginCases"/>
+            <class name="testcases.home.HomeCases"/>
         </classes>
     </test>
 </suite>
