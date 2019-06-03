@@ -22,7 +22,7 @@ public class ConfigureTest {
 
     public static WebDriver driver;
     public static SoftAssert softAssert = new SoftAssert();
-    public static Logger logger;
+    protected static Logger logger;
 
     /*==================================================================================================================
      'Method name:  setUpTest(String Remote, String Address, String Port, String Browser)
@@ -38,36 +38,7 @@ public class ConfigureTest {
     @Parameters({"remote", "port", "browser"})
     public void setUpTest(String Remote, String Port, String Browser) throws MalformedURLException {
 
-        if (Remote.equalsIgnoreCase("false")) {
-
-//           Select browser type
-            switch (Browser){
-                case "chrome":
-//                    Open Chrome browser
-                    System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
-                    driver = new ChromeDriver();
-                    logger  = Logger.getLogger("chromeLogger");
-                    break;
-                case "firefox":
-//                    Open Firefox browser
-                    System.setProperty("webdriver.gecko.driver", "drivers/geckodriver.exe");
-                    driver = new FirefoxDriver();
-                    logger  = Logger.getLogger("firefoxLogger");
-                    break;
-                case "internet explorer":
-//                    Open IE browser
-                    System.setProperty("webdriver.ie.driver", "drivers/IEDriverServer.exe");
-                    driver = new InternetExplorerDriver();
-                    logger  = Logger.getLogger("ieLogger");
-                    break;
-                case "MicrosoftEdge":
-//                    Open Edge browser
-                    System.setProperty("webdriver.edge.driver", "drivers/msedgedriver.exe");
-                    driver = new EdgeDriver();
-                    logger  = Logger.getLogger("edgeLogger");
-                    break;
-            }
-        } else if (Remote.equalsIgnoreCase("true")){
+        if (Remote.equals("true")){
 
             DesiredCapabilities capability = new DesiredCapabilities();
 
@@ -96,6 +67,35 @@ public class ConfigureTest {
             }
             capability.setPlatform(Platform.WINDOWS);
             driver = new RemoteWebDriver(new URL("http://192.168.213.21:"  + Port + "/wd/hub"), capability);
+        } else if (Remote.equals("false")) {
+
+//           Select browser type
+        switch (Browser){
+            case "chrome":
+//                    Open Chrome browser
+                System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
+                driver = new ChromeDriver();
+                logger  = Logger.getLogger("chromeLogger");
+                break;
+            case "firefox":
+//                    Open Firefox browser
+                System.setProperty("webdriver.gecko.driver", "drivers/geckodriver.exe");
+                driver = new FirefoxDriver();
+                logger  = Logger.getLogger("firefoxLogger");
+                break;
+            case "internet explorer":
+//                    Open IE browser
+                System.setProperty("webdriver.ie.driver", "drivers/IEDriverServer.exe");
+                driver = new InternetExplorerDriver();
+                logger  = Logger.getLogger("ieLogger");
+                break;
+            case "MicrosoftEdge":
+//                    Open Edge browser
+                System.setProperty("webdriver.edge.driver", "drivers/msedgedriver.exe");
+                driver = new EdgeDriver();
+                logger  = Logger.getLogger("edgeLogger");
+                break;
+            }
         }
 //       Set the waiting time for elements visible
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
@@ -110,6 +110,6 @@ public class ConfigureTest {
 
     @AfterTest
     public void cleanUp(){
-        driver.quit();
+        driver.close();
     }
 }

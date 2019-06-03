@@ -36,9 +36,8 @@ public class ReportConfigurations implements ITestListener {
     private String filePath = outputsPath + "files/";
     private String reportsPath = outputsPath + "reports/";
     private String screenshotsPath = outputsPath + "screenshots/";
-
-//    private Logger logger;
     private HashMap<String, HashMap<String, String>> suiteResult = new HashMap<>();
+//    private Logger logger = Logger.getLogger("rootLogger");
 
     public void onTestStart(ITestResult result) {
 //        logger.info(result.getTestClass().getName() + "_" + result.getMethod().getMethodName() + " was STARTED!");
@@ -132,7 +131,6 @@ public class ReportConfigurations implements ITestListener {
         createFolder(filePath);
         createFolder(reportsPath);
         createFolder(screenshotsPath);
-//         logger = ConfigureTest.logger;
     }
 
     public void onFinish(ITestContext context) {
