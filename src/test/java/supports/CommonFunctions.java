@@ -1,6 +1,7 @@
 package supports;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -96,5 +97,16 @@ public class CommonFunctions {
             isExist = file.exists();
             time++;
         }
+    }
+
+    public boolean isElementDisplayed(String XPathText){
+        boolean display;
+        try {
+            display = driver.findElement(By.xpath(XPathText)).isDisplayed();
+        }
+        catch (NoSuchElementException ex){
+            display = false;
+        }
+        return display;
     }
 }
