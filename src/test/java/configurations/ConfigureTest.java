@@ -110,6 +110,6 @@ public class ConfigureTest {
 
     @AfterTest
     public void cleanUp(){
-        driver.close();
+        driver.quit();
     }
 }
