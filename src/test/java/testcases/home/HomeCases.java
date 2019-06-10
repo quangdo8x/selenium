@@ -4,8 +4,14 @@ import configurations.ConfigureTest;
 import elements.HomePage;
 import elements.LoginPage;
 import elements.report.FertilityFocusReportPage;
+import elements.report.HaplotypeReportPage;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+import supports.CommonFunctions;
 
 import java.awt.*;
 import java.io.File;
@@ -15,62 +21,93 @@ public class HomeCases extends ConfigureTest {
 
     private LoginPage loginPage;
     private HomePage homePage;
-    private FertilityFocusReportPage fertilityFocusReportPage;
+    private HaplotypeReportPage haplotypeReportPage;
+    private CommonFunctions function;
+    private SoftAssert softAssert01;
+    private SoftAssert softAssert02;
+
+    private String bull = "29HO17747";
 
     @BeforeClass
     public void setUp(){
         loginPage = new LoginPage(driver);
         homePage = new HomePage(driver);
-        fertilityFocusReportPage = new FertilityFocusReportPage(driver);
+        haplotypeReportPage = new HaplotypeReportPage(driver);
+        function = new CommonFunctions(driver);
+        softAssert01 = new SoftAssert();
+        softAssert02 = new SoftAssert();
+    }
+
+    @BeforeMethod
+    public void preConditions(){
+//        Navigate to page
+        driver.navigate().to("http://qc-datavat.datagene.com.au/reports/haplotype");
     }
 
     /*===============================================================================
      'TestCaseID:   TC_01
-     'Description:  Verify that the fertility focus report is printed correctly
+     'Description:  Verify that the bull is searched correctly
      'Created By:   Quang Do
      'Created Date: May-10-2019
      'Source:
      ===============================================================================*/
     @Test
-    public void TC01_PrintFertilityFocusReport() throws InterruptedException, IOException, AWTException {
-        String userName = "dgadmin1";
-        String passWord = "12345678x@X";
-        String heardName = "";
-        String reportPath = "outputs/files/FertilityFocusReport.pdf";
+    public void TC01_SearchBreadInHaplotypeReport() throws InterruptedException {
 
-//        Step 1: Login
-        loginPage.logIn(userName, passWord);
-        logger.info("User logged in!");
-
-//        Step 2: Accept Terms & Conditions
+//        Pre-condition: Accept term and condition
+        Thread.sleep(3000);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOf(homePage.btnAcceptAndContinue));
         homePage.btnAcceptAndContinue.click();
-        logger.info("User accepted the terms and conditions!");
+        logger.info("User has accepted the terms and conditions!");
 
-//        Step 3: Select party "DataGene"
-        homePage.switchParty("DataGene");
-        logger.info("User selected the party!");
+//        Step 1: Navigate to Haplotype Report page
+//        Step 2: Select breed
+//        Step 3: Enter Bull ID
+//        Step 4: Click Search button
+        haplotypeReportPage.searchBreed("Holstein cross", bull);
+        logger.info("User has searched the bull!");
 
-//        Step 4: Go to Fertility Focus Report
-        driver.navigate().to("http://qc-datavat.datagene.com.au/reports/fertility-focus-report");
-        logger.info("Fertility Focus Report page was opened!");
-
-//        Step 5: Select the herd
-//        Step 6: Click Preview button
-//        Step 7: Click Print button
-//        Step 8: Click Print button on Print Preview
-//        Step 9: Enter file path of report
-//        Step 10: Click Save button
-        fertilityFocusReportPage.printReport(heardName);
-        logger.info("Fertility Focus Report was saved!");
-
-//        Expected result: Fertility Focus report is saved
-        File file = new File(reportPath);
-        softAssert.assertTrue(file.exists());
-
-//        Expected result: Fertility Focus report content is correct
-        fertilityFocusReportPage.verifyFertilityFocusReport(heardName);
+//        Expected result: The bull is found and displayed in table result
+        softAssert01.assertTrue(function.isElementDisplayed("//td[text()='" + bull + "']"));
 
 //        Count failed assertions if any
-        softAssert.assertAll();
+        softAssert01.assertAll();
+    }
+
+    /*===============================================================================
+     'TestCaseID:   TC_02
+     'Description:  Verify that the haplotype report is printed correctly
+     'Created By:   Quang Do
+     'Created Date: May-10-2019
+     'Source:
+     ===============================================================================*/
+    @Test
+    public void TC02_PrintHaplotypeReport() throws IOException, AWTException, InterruptedException {
+
+        String reportPath = "outputs/files/Report.pdf";
+
+//        Pre-condition: Search bull
+        haplotypeReportPage.searchBreed("Holstein cross", bull);
+        logger.info("User has searched the bull!");
+
+//        Step 5: Check on checkbox to select bull
+//        Step 6: Click Print button
+//        Step 7: Click Print button on Print panel
+//        Step 8: Enter report path
+//        Step 9: Click Save button
+        haplotypeReportPage.printReport(bull);
+        logger.info("Haplotype Report has been saved!");
+
+//        Expected result: The report is saved
+        File file = new File(reportPath);
+        softAssert02.assertTrue(file.exists());
+
+//        Expected result: The report is correct
+        String reportContent = function.getPDFContent(reportPath);
+        softAssert02.assertTrue(reportContent.contains(bull));
+
+//        Count failed assertions if any
+        softAssert02.assertAll();
     }
 }

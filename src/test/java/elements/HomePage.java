@@ -41,9 +41,6 @@ public class HomePage {
     @FindBy(xpath = "//ul[@id='user-menu']/li/a[@href='/contact-and-support']")
     private WebElement lnkContactSupport;
 
-    @FindBy(id = "btn-login-redirect")
-    private WebElement btnLogin;
-
     @FindBy(xpath = "//li[@class='user-name-menu-li']/span")
     public WebElement lblUsername;
 
@@ -145,15 +142,14 @@ public class HomePage {
     private WebElement lnkDisclaimer;
 
     /*======================================================================================
-    'Method name:  clickOnSubMenu(WebElement RootMenu, WebElement SubMenu, Boolean HasLoading)
+    'Method name:  clickOnSubMenu(WebElement RootMenu, WebElement SubMenu)
     'Description:  Hover over root menu then click on sub menu to navigate to the web page of sub menu
     'Arguments:    WebElement RootMenu: the element name of root menu
     '              WebElement SubMenu: the element name of sub menu
-    '              Boolean HasLoading: there is loading after clicking sub menu or not
     'Created by:   Quang Do
     'Created date: May-08-2019
     ======================================================================================*/
-    public void clickOnSubMenu(WebElement RootMenu, WebElement SubMenu, Boolean HasLoading) throws InterruptedException {
+    public void clickOnSubMenu(WebElement RootMenu, WebElement SubMenu) throws InterruptedException {
 //        Hover over root menu
         Actions action = new Actions(driver);
         action.moveToElement(RootMenu).build().perform();
@@ -164,10 +160,8 @@ public class HomePage {
 //        Click sub menu/link
         action.click(SubMenu).perform();
 
-        if (HasLoading) {
 //        Wait for loading completed
-            function.waitForLoadingDisappears(60);
-        }
+        function.waitForLoadingDisappears(60);
     }
 
     /*======================================================================================
@@ -182,7 +176,7 @@ public class HomePage {
         boolean isVisible = hedSelectParty.isDisplayed();
         if (!isVisible){
 //              Click Switch Party link
-            clickOnSubMenu(lblUsername, lnkSwitchParty, true);
+            clickOnSubMenu(lblUsername, lnkSwitchParty);
         }
 //        Handle to wait for party ready to click
         Thread.sleep(1500);

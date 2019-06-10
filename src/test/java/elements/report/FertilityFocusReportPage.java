@@ -108,7 +108,6 @@ public class FertilityFocusReportPage {
         COSDocument cosDoc = null;
         PDFTextStripper pdfStripper;
         String parsedText;
-        SoftAssert softAssert = ConfigureTest.softAssert;
 
         File file = new File("outputs/files/FertilityFocusReport.pdf");
         try {
@@ -116,7 +115,6 @@ public class FertilityFocusReportPage {
             pdfStripper = new PDFTextStripper();
             parsedText = pdfStripper.getText(pdDoc);
 //            System.out.println(parsedText.replaceAll("[^A-Za-z0-9. ]+", ""));
-            softAssert.assertTrue(parsedText.contains(HerdName));
         } catch (Exception e) {
             e.printStackTrace();
             try {

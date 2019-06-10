@@ -20,6 +20,9 @@ public class LoginPage {
         PageFactory.initElements(driver, this);
     }
 
+    @FindBy(id = "btn-login-redirect")
+    private WebElement btnRedirectToLogin;
+
     @FindBy(id = "username")
     public WebElement txtUsername;
 
@@ -47,6 +50,11 @@ public class LoginPage {
      'Created date: May-08-2019
      ===============================================================================*/
     public void logIn(String UserName, String PassWord) throws InterruptedException {
+//        Click Login button to redirect to Login page
+        CommonFunctions function = new CommonFunctions(driver);
+        function.waitForElementEnabled(btnRedirectToLogin, 30);
+        btnRedirectToLogin.click();
+
 //        Enter username
         wait.until(ExpectedConditions.visibilityOf(txtUsername));
         txtUsername.sendKeys(UserName);
@@ -66,7 +74,6 @@ public class LoginPage {
         }
 
 //        Wait for loading completed
-        CommonFunctions function = new CommonFunctions(driver);
         function.waitForLoadingDisappears(60);
     }
 }

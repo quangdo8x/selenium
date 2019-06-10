@@ -21,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 public class ConfigureTest {
 
     public static WebDriver driver;
-    public static SoftAssert softAssert = new SoftAssert();
     protected static Logger logger;
 
     /*==================================================================================================================
@@ -98,14 +97,10 @@ public class ConfigureTest {
             }
         }
 //       Set the waiting time for elements visible
-        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
 //        Maximize browser
         driver.manage().window().maximize();
-
-//        Enter web URL to navigate to page
-//        driver.navigate().to("http://qc-datavat.datagene.com.au");
-        driver.navigate().to("https://github.com/");
     }
 
     @AfterTest

@@ -1,5 +1,8 @@
 package supports;
 
+import org.apache.pdfbox.cos.COSDocument;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -26,13 +29,14 @@ public class CommonFunctions {
 
         int time = 1;
 
+        Thread.sleep(time*1000);
 //        Check loading icon appears or not
-        boolean isVisible = driver.findElement(By.id("loader")).isDisplayed();
+        boolean isVisible = isElementDisplayed("//div[@id='loader']");
         while (isVisible && time < MaxTime) {
 
 //            Wait 1 second then check loading icon appears or not again
             Thread.sleep(time*100);
-            isVisible = driver.findElement(By.id("loader")).isDisplayed();
+            isVisible = isElementDisplayed("//div[@id='loader']");
             time++;
         }
     }
@@ -99,6 +103,13 @@ public class CommonFunctions {
         }
     }
 
+    /*===============================================================================
+    'Method name:  isElementDisplayed(String XPathText)
+    'Description:  Check element displayed or not
+    'Arguments:    String XPathText: the value of XPath
+    'Created by:   Quang Do
+    'Created date: May-10-2019
+    ===============================================================================*/
     public boolean isElementDisplayed(String XPathText){
         boolean display;
         try {
@@ -108,5 +119,39 @@ public class CommonFunctions {
             display = false;
         }
         return display;
+    }
+
+    /*===============================================================================
+    'Method name:  getPDFContent(String FilePath)
+    'Description:  Get the content in report
+    'Arguments:    String FilePath: the path of PDF file
+    'Created by:   Quang Do
+    'Created date: May-10-2019
+    ===============================================================================*/
+    public String getPDFContent(String FilePath){
+
+        PDDocument pdDoc = null;
+        COSDocument cosDoc = null;
+        PDFTextStripper pdfStripper;
+        String parsedText = null;
+
+        File file = new File(FilePath);
+        try {
+            pdDoc = PDDocument.load(new File(String.valueOf(file)));
+            pdfStripper = new PDFTextStripper();
+            parsedText = pdfStripper.getText(pdDoc);
+//            System.out.println(parsedText.replaceAll("[^A-Za-z0-9. ]+", ""));
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                if (cosDoc != null)
+                    cosDoc.close();
+                if (pdDoc != null)
+                    pdDoc.close();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+        return parsedText;
     }
 }
