@@ -24,9 +24,8 @@ public class FertilityFocusReportPage {
 
     public FertilityFocusReportPage(WebDriver driver){
         this.driver = driver;
-
-        function = new CommonFunctions(driver);
         PageFactory.initElements(driver, this);
+        function = new CommonFunctions(driver);
     }
 
     @FindBy(xpath = "//h3[@class='block-title']")

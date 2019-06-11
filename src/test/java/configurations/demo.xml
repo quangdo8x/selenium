@@ -4,7 +4,7 @@
     <listeners>
         <listener class-name="supports.ReportConfigurations"/>
     </listeners>
-    <parameter name="remote" value="true"/>
+    <parameter name="remote" value="false"/>
     <parameter name="port" value="4444"/>
     <test name="Test">
         <parameter name="browser" value="chrome"/>

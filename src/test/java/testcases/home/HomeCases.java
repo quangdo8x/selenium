@@ -2,13 +2,10 @@ package testcases.home;
 
 import configurations.ConfigureTest;
 import elements.HomePage;
-import elements.LoginPage;
-import elements.report.FertilityFocusReportPage;
 import elements.report.HaplotypeReportPage;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import supports.CommonFunctions;
@@ -19,29 +16,15 @@ import java.io.IOException;
 
 public class HomeCases extends ConfigureTest {
 
-    private LoginPage loginPage;
-    private HomePage homePage;
     private HaplotypeReportPage haplotypeReportPage;
     private CommonFunctions function;
-    private SoftAssert softAssert01;
-    private SoftAssert softAssert02;
 
     private String bull = "29HO17747";
 
-    @BeforeClass
+    @BeforeTest
     public void setUp(){
-        loginPage = new LoginPage(driver);
-        homePage = new HomePage(driver);
         haplotypeReportPage = new HaplotypeReportPage(driver);
         function = new CommonFunctions(driver);
-        softAssert01 = new SoftAssert();
-        softAssert02 = new SoftAssert();
-    }
-
-    @BeforeMethod
-    public void preConditions(){
-//        Navigate to page
-        driver.navigate().to("http://qc-datavat.datagene.com.au/reports/haplotype");
     }
 
     /*===============================================================================
@@ -52,16 +35,24 @@ public class HomeCases extends ConfigureTest {
      'Source:
      ===============================================================================*/
     @Test
-    public void TC01_SearchBreadInHaplotypeReport() throws InterruptedException {
+    public void
+    TC01_SearchBreadInHaplotypeReport() throws InterruptedException {
+
+        HomePage homePage = new HomePage(driver);
+        SoftAssert softAssert01 = new SoftAssert();
 
 //        Pre-condition: Accept term and condition
-        Thread.sleep(3000);
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        Thread.sleep(5000);
+        WebDriverWait wait = new WebDriverWait(driver, 20);
         wait.until(ExpectedConditions.visibilityOf(homePage.btnAcceptAndContinue));
         homePage.btnAcceptAndContinue.click();
         logger.info("User has accepted the terms and conditions!");
 
 //        Step 1: Navigate to Haplotype Report page
+        driver.navigate().to("http://qc-datavat.datagene.com.au/reports/haplotype");
+        function.waitForLoadingDisappears(60);
+        logger.info("Haplotype Report page has opened!");
+
 //        Step 2: Select breed
 //        Step 3: Enter Bull ID
 //        Step 4: Click Search button
@@ -86,8 +77,11 @@ public class HomeCases extends ConfigureTest {
     public void TC02_PrintHaplotypeReport() throws IOException, AWTException, InterruptedException {
 
         String reportPath = "outputs/files/Report.pdf";
+        SoftAssert softAssert02 = new SoftAssert();
 
 //        Pre-condition: Search bull
+        driver.navigate().to("http://qc-datavat.datagene.com.au/reports/haplotype");
+        function.waitForLoadingDisappears(60);
         haplotypeReportPage.searchBreed("Holstein cross", bull);
         logger.info("User has searched the bull!");
 
@@ -102,10 +96,6 @@ public class HomeCases extends ConfigureTest {
 //        Expected result: The report is saved
         File file = new File(reportPath);
         softAssert02.assertTrue(file.exists());
-
-//        Expected result: The report is correct
-        String reportContent = function.getPDFContent(reportPath);
-        softAssert02.assertTrue(reportContent.contains(bull));
 
 //        Count failed assertions if any
         softAssert02.assertAll();

@@ -1,6 +1,5 @@
 package supports;
 
-import org.apache.pdfbox.cos.COSDocument;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.By;
@@ -78,6 +77,7 @@ public class CommonFunctions {
 //        Delete file if existing
         if (isExist) {
             file.delete();
+            System.out.println(file.exists());
         }
     }
 
@@ -131,27 +131,20 @@ public class CommonFunctions {
     public String getPDFContent(String FilePath){
 
         PDDocument pdDoc = null;
-        COSDocument cosDoc = null;
         PDFTextStripper pdfStripper;
-        String parsedText = null;
+        String parsedText;
+        String contentPDF = null;
 
         File file = new File(FilePath);
         try {
-            pdDoc = PDDocument.load(new File(String.valueOf(file)));
+            pdDoc = PDDocument.load(file);
             pdfStripper = new PDFTextStripper();
             parsedText = pdfStripper.getText(pdDoc);
+            contentPDF = parsedText.replaceAll("[^A-Za-z0-9. ]+", "");
 //            System.out.println(parsedText.replaceAll("[^A-Za-z0-9. ]+", ""));
         } catch (Exception e) {
             e.printStackTrace();
-            try {
-                if (cosDoc != null)
-                    cosDoc.close();
-                if (pdDoc != null)
-                    pdDoc.close();
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
         }
-        return parsedText;
+        return contentPDF;
     }
 }

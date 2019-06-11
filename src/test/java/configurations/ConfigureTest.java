@@ -9,10 +9,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
-import org.testng.asserts.SoftAssert;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -33,7 +32,7 @@ public class ConfigureTest {
      'Created by:   Quang Do
      'Created date: May-10-2019
      =================================================================================================================*/
-    @BeforeTest
+    @BeforeClass
     @Parameters({"remote", "port", "browser"})
     public void setUpTest(String Remote, String Port, String Browser) throws MalformedURLException {
 
@@ -101,9 +100,12 @@ public class ConfigureTest {
 
 //        Maximize browser
         driver.manage().window().maximize();
+
+//        Navigate to page
+        driver.navigate().to("http://qc-datavat.datagene.com.au");
     }
 
-    @AfterTest
+    @AfterClass
     public void cleanUp(){
         driver.quit();
     }

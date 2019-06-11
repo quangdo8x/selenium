@@ -15,9 +15,8 @@ public class HomePage {
 
     public HomePage(WebDriver driver){
         this.driver = driver;
-
-        function = new CommonFunctions(driver);
         PageFactory.initElements(driver, this);
+        function = new CommonFunctions(driver);
     }
 
 //    ----------------------Terms and Conditions popup------------------

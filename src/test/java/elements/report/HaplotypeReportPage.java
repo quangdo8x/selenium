@@ -1,20 +1,13 @@
 package elements.report;
 
-import configurations.ConfigureTest;
-import org.apache.pdfbox.cos.COSDocument;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.asserts.SoftAssert;
 import supports.CommonFunctions;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.io.File;
 import java.io.IOException;
 
 public class HaplotypeReportPage {
@@ -24,9 +17,8 @@ public class HaplotypeReportPage {
 
     public HaplotypeReportPage(WebDriver driver){
         this.driver = driver;
-
-        function = new CommonFunctions(driver);
         PageFactory.initElements(driver, this);
+        function = new CommonFunctions(driver);
     }
 
     @FindBy(xpath = "//h3[@class='block-title']")
@@ -60,13 +52,13 @@ public class HaplotypeReportPage {
     ===============================================================================*/
     public void searchBreed(String Breed, String Keyword) throws InterruptedException {
 //        Select breed if the argument is not blank
-        if (!Breed.equals("")) {
+        if (!Breed.isEmpty()) {
             drdSelectBreeds.click();
-            driver.findElement(By.xpath("//div[text()='" + Breed + "']")).click();
+            driver.findElement(By.xpath("//div[text()=' " + Breed.trim() + " ']")).click();
         }
 
 //        Enter keyword if the argument is not blank
-        if (!Keyword.equals("")){
+        if (!Keyword.isEmpty()){
             txtSearch.sendKeys(Keyword);
         }
 
@@ -88,11 +80,8 @@ public class HaplotypeReportPage {
 
         String filePath = "outputs/files/Report.pdf";
 
-//        Delete old report before printing new file if exist before that
-        function.deleteFile(filePath);
-
 //        Select bull in result table
-        driver.findElement(By.xpath("//td[text()='" + Bull + "']/preceding-sibling::td/label/input")).click();
+        driver.findElement(By.xpath("//td[text()='" + Bull + "']/preceding-sibling::td/label/span")).click();
 
 //      Wait for Print button is clickable
         function.waitForElementEnabled(btnPrint, 30);
@@ -103,19 +92,13 @@ public class HaplotypeReportPage {
 //        Wait for loading completed
         function.waitForLoadingDisappears(60);
 
+//        Delete old report before printing new file if exist before that
+        function.deleteFile(filePath);
+
 //        Wait for Print ready
-        Thread.sleep(3000);
+        Thread.sleep(5000);
 
-//        Handle to click Print button on Print frame by pressing key {Enter}
-        Robot action = new Robot();
-        action.keyPress(KeyEvent.VK_ENTER);
-        action.keyRelease(KeyEvent.VK_ENTER);
-
-//        Wait for Save As opened
-        Thread.sleep(3000);
-
-//        Enter report name as C:\Fertility_Focus_Report.pdf
-//        Runtime.getRuntime().exec(projectDirectory + "\\autoit\\SavePrintOutputAs.exe");
+//        Enter report name
         Runtime.getRuntime().exec( "autoit/SavePrintOutputAs.exe");
 
 //        Wait for file created
