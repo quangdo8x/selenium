@@ -2,10 +2,9 @@ package supports;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 
@@ -30,12 +29,12 @@ public class CommonFunctions {
 
         Thread.sleep(time*1000);
 //        Check loading icon appears or not
-        boolean isVisible = isElementDisplayed("//div[@id='loader']");
+        boolean isVisible = isElementVisible("//div[@id='loader']");
         while (isVisible && time < MaxTime) {
 
 //            Wait 1 second then check loading icon appears or not again
             Thread.sleep(time*100);
-            isVisible = isElementDisplayed("//div[@id='loader']");
+            isVisible = isElementVisible("//div[@id='loader']");
             time++;
         }
     }
@@ -77,7 +76,6 @@ public class CommonFunctions {
 //        Delete file if existing
         if (isExist) {
             file.delete();
-            System.out.println(file.exists());
         }
     }
 
@@ -104,21 +102,23 @@ public class CommonFunctions {
     }
 
     /*===============================================================================
-    'Method name:  isElementDisplayed(String XPathText)
-    'Description:  Check element displayed or not
+    'Method name:  isElementVisible(String XPathText)
+    'Description:  Check element is visible or not
     'Arguments:    String XPathText: the value of XPath
     'Created by:   Quang Do
     'Created date: May-10-2019
     ===============================================================================*/
-    public boolean isElementDisplayed(String XPathText){
-        boolean display;
+    public boolean isElementVisible(String XPathText){
+        boolean elementVisible;
         try {
-            display = driver.findElement(By.xpath(XPathText)).isDisplayed();
+            WebDriverWait wait = new WebDriverWait(driver, 5);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(XPathText)));
+            elementVisible = true;
         }
-        catch (NoSuchElementException ex){
-            display = false;
+        catch (NoSuchElementException | StaleElementReferenceException | TimeoutException ex){
+            elementVisible = false;
         }
-        return display;
+        return elementVisible;
     }
 
     /*===============================================================================
@@ -146,5 +146,30 @@ public class CommonFunctions {
             e.printStackTrace();
         }
         return contentPDF;
+    }
+
+    /*======================================================================================
+    'Method name:  selectMenuItem(WebElement RootMenu, WebElement SubMenu)
+    'Description:  Hover over root menu then click on sub menu to navigate to the web page of sub menu
+    'Arguments:    WebElement RootMenu: the element name of root menu
+    '              WebElement SubMenu: the element name of sub menu
+    'Created by:   Quang Do
+    'Created date: May-08-2019
+    ======================================================================================*/
+    public void selectMenuItem(WebElement RootMenu, WebElement SubMenu) throws InterruptedException {
+//        Hover over root menu
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOf(RootMenu));
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript("arguments[0].click()", RootMenu);
+
+//        Wait for sub menu visible
+        Thread.sleep(1000);
+
+//        Click sub menu/link
+        SubMenu.click();
+
+//        Wait for loading completed
+        waitForLoadingDisappears(60);
     }
 }

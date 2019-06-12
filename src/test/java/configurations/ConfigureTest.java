@@ -100,9 +100,6 @@ public class ConfigureTest {
 
 //        Maximize browser
         driver.manage().window().maximize();
-
-//        Navigate to page
-        driver.navigate().to("http://qc-datavat.datagene.com.au");
     }
 
     @AfterClass

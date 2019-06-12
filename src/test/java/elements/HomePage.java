@@ -3,9 +3,10 @@ package elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import supports.CommonFunctions;
 
 public class HomePage {
@@ -30,11 +31,11 @@ public class HomePage {
     private WebElement btnDecline;
 
 //    ----------------------Select Party popup----------------------------------------
-    @FindBy(xpath = "//h4[text()='SELECT PARTY']")
+    @FindBy(xpath = "//h4[@class='modal-title header-party-modals']")
     private WebElement hedSelectParty;
 
 //    ----------------------Header--------------------------------------------
-    @FindBy(className = "logo-datavat")
+    @FindBy(xpath = "//img[@class='logo-datavat']")
     private WebElement imgLogo;
 
     @FindBy(xpath = "//ul[@id='user-menu']/li/a[@href='/contact-and-support']")
@@ -61,7 +62,7 @@ public class HomePage {
     private WebElement mnuAnimalSearch;
 
     @FindBy(xpath = "//a[text()='Report & Tools']")
-    private WebElement mnuReportTools;
+    public WebElement mnuReportTools;
 
     @FindBy(xpath = "//a[text()='ABV Lists']")
     private WebElement mnuABVLists;
@@ -83,7 +84,7 @@ public class HomePage {
     private WebElement lnkGeneticProgress;
 
     @FindBy(xpath = "//a[@href='/reports/haplotype']")
-    private WebElement lnkHaplotype;
+    public WebElement lnkHaplotype;
 
     @FindBy(xpath = "//a[@href='/reports/semen-fertility']")
     private WebElement lnkSemenFertility;
@@ -141,29 +142,6 @@ public class HomePage {
     private WebElement lnkDisclaimer;
 
     /*======================================================================================
-    'Method name:  clickOnSubMenu(WebElement RootMenu, WebElement SubMenu)
-    'Description:  Hover over root menu then click on sub menu to navigate to the web page of sub menu
-    'Arguments:    WebElement RootMenu: the element name of root menu
-    '              WebElement SubMenu: the element name of sub menu
-    'Created by:   Quang Do
-    'Created date: May-08-2019
-    ======================================================================================*/
-    public void clickOnSubMenu(WebElement RootMenu, WebElement SubMenu) throws InterruptedException {
-//        Hover over root menu
-        Actions action = new Actions(driver);
-        action.moveToElement(RootMenu).build().perform();
-
-//        Wait for sub menu visible
-        Thread.sleep(1000);
-
-//        Click sub menu/link
-        action.click(SubMenu).perform();
-
-//        Wait for loading completed
-        function.waitForLoadingDisappears(60);
-    }
-
-    /*======================================================================================
     'Method name:  switchParty(String PartyName)
     'Description:  Open Select Party from menu item Username, then select party name
     'Arguments:    String PartyName: party name
@@ -172,16 +150,18 @@ public class HomePage {
     ======================================================================================*/
     public void switchParty(String PartyName) throws InterruptedException {
 //        Open Select Party popup if not opened yet
-        boolean isVisible = hedSelectParty.isDisplayed();
+        boolean isVisible = function.isElementVisible("//h4[@class='modal-title header-party-modals']");
         if (!isVisible){
 //              Click Switch Party link
-            clickOnSubMenu(lblUsername, lnkSwitchParty);
+            function.selectMenuItem(lblUsername, lnkSwitchParty);
         }
-//        Handle to wait for party ready to click
-        Thread.sleep(1500);
+//        Wait for party list ready to click
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        String partyItem = "//button[text()='" + PartyName + "']";
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(partyItem)));
 
 //        Select party on list by text
-        driver.findElement(By.xpath("//button[text()='" + PartyName + "']")).click();
+        driver.findElement(By.xpath(partyItem)).click();
 
 //        Wait for loading completed
         function.waitForLoadingDisappears(60);

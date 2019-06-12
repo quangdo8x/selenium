@@ -96,7 +96,7 @@ public class HaplotypeReportPage {
         function.deleteFile(filePath);
 
 //        Wait for Print ready
-        Thread.sleep(5000);
+        Thread.sleep(10000);
 
 //        Enter report name
         Runtime.getRuntime().exec( "autoit/SavePrintOutputAs.exe");

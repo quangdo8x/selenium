@@ -5,7 +5,7 @@ import elements.HomePage;
 import elements.report.HaplotypeReportPage;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import supports.CommonFunctions;
@@ -18,13 +18,18 @@ public class HomeCases extends ConfigureTest {
 
     private HaplotypeReportPage haplotypeReportPage;
     private CommonFunctions function;
+    HomePage homePage;
 
     private String bull = "29HO17747";
 
-    @BeforeTest
+    @BeforeMethod
     public void setUp(){
         haplotypeReportPage = new HaplotypeReportPage(driver);
         function = new CommonFunctions(driver);
+        homePage = new HomePage(driver);
+
+//        Navigate to page
+        driver.navigate().to("http://qc-datavat.datagene.com.au");
     }
 
     /*===============================================================================
@@ -38,8 +43,7 @@ public class HomeCases extends ConfigureTest {
     public void
     TC01_SearchBreadInHaplotypeReport() throws InterruptedException {
 
-        HomePage homePage = new HomePage(driver);
-        SoftAssert softAssert01 = new SoftAssert();
+        SoftAssert softAssert = new SoftAssert();
 
 //        Pre-condition: Accept term and condition
         Thread.sleep(5000);
@@ -49,8 +53,7 @@ public class HomeCases extends ConfigureTest {
         logger.info("User has accepted the terms and conditions!");
 
 //        Step 1: Navigate to Haplotype Report page
-        driver.navigate().to("http://qc-datavat.datagene.com.au/reports/haplotype");
-        function.waitForLoadingDisappears(60);
+        function.selectMenuItem(homePage.mnuReportTools, homePage.lnkHaplotype);
         logger.info("Haplotype Report page has opened!");
 
 //        Step 2: Select breed
@@ -60,10 +63,10 @@ public class HomeCases extends ConfigureTest {
         logger.info("User has searched the bull!");
 
 //        Expected result: The bull is found and displayed in table result
-        softAssert01.assertTrue(function.isElementDisplayed("//td[text()='" + bull + "']"));
+        softAssert.assertTrue(function.isElementVisible("//td[text()='" + bull + "']"));
 
 //        Count failed assertions if any
-        softAssert01.assertAll();
+        softAssert.assertAll();
     }
 
     /*===============================================================================
@@ -77,11 +80,10 @@ public class HomeCases extends ConfigureTest {
     public void TC02_PrintHaplotypeReport() throws IOException, AWTException, InterruptedException {
 
         String reportPath = "outputs/files/Report.pdf";
-        SoftAssert softAssert02 = new SoftAssert();
+        SoftAssert softAssert = new SoftAssert();
 
 //        Pre-condition: Search bull
-        driver.navigate().to("http://qc-datavat.datagene.com.au/reports/haplotype");
-        function.waitForLoadingDisappears(60);
+        function.selectMenuItem(homePage.mnuReportTools, homePage.lnkHaplotype);
         haplotypeReportPage.searchBreed("Holstein cross", bull);
         logger.info("User has searched the bull!");
 
@@ -95,9 +97,9 @@ public class HomeCases extends ConfigureTest {
 
 //        Expected result: The report is saved
         File file = new File(reportPath);
-        softAssert02.assertTrue(file.exists());
+        softAssert.assertTrue(file.exists());
 
 //        Count failed assertions if any
-        softAssert02.assertAll();
+        softAssert.assertAll();
     }
 }
