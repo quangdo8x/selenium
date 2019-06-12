@@ -115,7 +115,7 @@
                 <configuration>
                     <!--This configuration is for Jenkins build with using demo.xml file-->
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/java/configurations/demo.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/java/configurations/jenkins.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
