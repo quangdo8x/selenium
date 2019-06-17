@@ -1,36 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Debug" parallel="methods">
-    <listeners>
-        <listener class-name="supports.ReportConfigurations"/>
-    </listeners>
-    <parameter name="remote" value="true"/>
+<suite name="Debug" thread-count="3" parallel="tests">
     <test name="chrome">
         <parameter name="port" value="4445"/>
-        <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="testcases.GitHub"/>
+            <class name="testcases.MultiBrowsers"/>
         </classes>
     </test>
     <test name="firefox">
         <parameter name="port" value="4446"/>
-        <parameter name="browser" value="firefox"/>
         <classes>
-            <class name="testcases.GitHub"/>
+            <class name="testcases.MultiBrowsers"/>
         </classes>
     </test>
     <test name="MicrosoftEdge">
         <parameter name="port" value="4448"/>
-        <parameter name="browser" value="MicrosoftEdge"/>
         <classes>
-            <class name="testcases.GitHub"/>
+            <class name="testcases.MultiBrowsers"/>
         </classes>
     </test>
-    <!--<test name="internet explorer">
-        <parameter name="port" value="4447"/>
-        <parameter name="browser" value="internet explorer"/>
-        <classes>
-            <class name="testcases.GitHub"/>
-        </classes>
-    </test>-->
 </suite>

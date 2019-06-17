@@ -1,7 +1,7 @@
 package elements;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -23,13 +23,13 @@ public class LoginPage {
     private WebElement btnRedirectToLogin;
 
     @FindBy(id = "username")
-    public WebElement txtUsername;
+    private WebElement txtUsername;
 
     @FindBy(id = "password")
-    public WebElement txtPassword;
+    private WebElement txtPassword;
 
     @FindBy(id = "login")
-    public WebElement btnLogin;
+    private WebElement btnLogin;
 
     @FindBy(linkText = "Forgot your password?")
     private WebElement lnkForgotPassword;
@@ -63,14 +63,6 @@ public class LoginPage {
 
 //        Click Login
         btnLogin.click();
-
-//        Handle to click on Security alert on Firefox
-        Capabilities cap = ((RemoteWebDriver) driver).getCapabilities();
-        String browserName = cap.getBrowserName().toLowerCase();
-        if (browserName.equals("firefox") || browserName.equals("internet explorer") || browserName.equals("microsoftedge")){
-            wait.until(ExpectedConditions.alertIsPresent());
-            driver.switchTo().alert().accept();
-        }
 
 //        Wait for loading completed
         function.waitForLoadingDisappears(60);

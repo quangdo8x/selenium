@@ -14,16 +14,10 @@ public class LoginCases extends ConfigureTest {
     private LoginPage loginPage;
     private HomePage homePage;
 
-    private String userName = "dgadmin1";
-    private String passWord = "12345678x@X";
-
     @BeforeMethod
     public void setUp(){
         loginPage = new LoginPage(driver);
         homePage = new HomePage(driver);
-
-//        Navigate to page
-        driver.navigate().to("http://qc-datavat.datagene.com.au");
     }
 
     /*===============================================================================
@@ -48,7 +42,7 @@ public class LoginCases extends ConfigureTest {
 //        Step 2: Enter invalid password
 //        Step 3: Click Login button
         loginPage.logIn("invalidusername", "invalidpassword");
-        logger.info("User has been logged in with invalid account!");
+        logger.info("User has logged in!");
 
 //        Expected result: Login page is still opened
         softAssert.assertEquals("DataGene Identity Server", driver.getTitle().trim());
@@ -72,6 +66,8 @@ public class LoginCases extends ConfigureTest {
     @Test
     public void TC02_LoginWithValidAccount() throws InterruptedException {
 
+        String userName = "dgadmin1";
+        String passWord = "12345678x@X";
         SoftAssert softAssert = new SoftAssert();
 
 //        Pre-condition: Navigate to page
