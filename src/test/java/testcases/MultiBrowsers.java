@@ -5,7 +5,6 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -20,7 +19,7 @@ public class MultiBrowsers{
 
     @Parameters({"port"})
     @BeforeClass()
-    public void setUp(String port) throws MalformedURLException, InterruptedException {
+    public void setUp(String port) throws MalformedURLException {
         DesiredCapabilities cap =  new DesiredCapabilities();
         if(port.equalsIgnoreCase("4446"))
         {
@@ -29,7 +28,6 @@ public class MultiBrowsers{
             driver = new RemoteWebDriver(new URL("http://192.168.213.21:" + port + "/wd/hub"),cap);
             driver.navigate().to("https://github.com/login");
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-            Thread.sleep(3000);
         }
         else if(port.equalsIgnoreCase("4445"))
         {
@@ -38,7 +36,6 @@ public class MultiBrowsers{
             driver = new RemoteWebDriver(new URL("http://192.168.213.21:" + port + "/wd/hub"),cap);
             driver.navigate().to("https://github.com/login");
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-            Thread.sleep(3000);
         }
         else if(port.equalsIgnoreCase("4448"))
         {
@@ -47,21 +44,13 @@ public class MultiBrowsers{
             driver = new RemoteWebDriver(new URL("http://192.168.213.21:" + port + "/wd/hub"),cap);
             driver.navigate().to("https://github.com/login");
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-            Thread.sleep(3000);
         }
     }
 
     @Test
-    public void githubLogin()
-    {
+    public void githubLogin(){
         driver.findElement(By.id("login_field")).sendKeys("quangdo8x");
         driver.findElement(By.id("password")).sendKeys("q@29072011gh");
         driver.findElement(By.name("commit")).click();
-    }
-
-    @AfterClass()
-    public void tearDown()
-    {
-        driver.quit();
     }
 }
