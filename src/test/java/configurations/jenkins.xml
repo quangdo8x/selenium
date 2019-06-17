@@ -4,10 +4,8 @@
     <listeners>
         <listener class-name="supports.ReportConfigurations"/>
     </listeners>
-    <parameter name="remote" value="true"/>
-    <parameter name="port" value="4445"/>
     <test name="Login">
-        <parameter name="browser" value="chrome"/>
+        <parameter name="port" value="4445"/>
         <classes>
             <class name="testcases.login.LoginCases"/>
         </classes>
