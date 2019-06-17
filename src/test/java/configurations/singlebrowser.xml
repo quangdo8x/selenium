@@ -4,10 +4,15 @@
     <listeners>
         <listener class-name="supports.ReportConfigurations"/>
     </listeners>
-    <parameter name="remote" value="true"/>
-    <parameter name="port" value="4445"/>
     <test name="Test">
-        <parameter name="browser" value="chrome"/>
+        <!--Port 4445 for Chrome-->
+        <parameter name="port" value="4445"/>
+        <!--Port 4446 for Firefox-->
+        <!--<parameter name="port" value="4446"/>-->
+        <!--Port 4447 for IE-->
+        <!--<parameter name="port" value="4447"/>-->
+        <!--Port 4448 for Edge-->
+        <!--<parameter name="port" value="4448"/>-->
         <classes>
             <class name="testcases.login.LoginCases"/>
             <class name="testcases.home.HomeCases"/>

@@ -27,7 +27,6 @@ public class CommonFunctions {
 
         int time = 1;
 
-        Thread.sleep(time*1000);
 //        Check loading icon appears or not
         boolean isVisible = isElementVisible("//div[@id='loader']");
         while (isVisible && time < MaxTime) {
